@@ -9,4 +9,4 @@
 手游发布管理
 系统角色
 超级管理员
-平台开发者![image](https://user-images.githubusercontent.com/100690971/200449088-2af5ad2c-ab68-4f27-95d9-f74ec781a025.png)
+平台开发者
