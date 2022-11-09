@@ -141,7 +141,7 @@ public class AppInfoModifyController {
         appInfo.setModifyBy(devUser.getId());
         appInfo.setModifyDate(new Date());
         try {
-            int modifyAppInfo = appInfoService.modifyAppInfoByAppInfoId(appInfo);
+            int modifyAppInfo = appInfoService.modifyAppInfoByAppInfo(appInfo);
             if (modifyAppInfo <= 0) {
                 return Result.fail("修改失败！");
             }

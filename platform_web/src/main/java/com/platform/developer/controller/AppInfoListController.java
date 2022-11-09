@@ -2,17 +2,23 @@ package com.platform.developer.controller;
 
 import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageInfo;
+import com.platform.Vo.Result;
 import com.platform.backend.entity.AppCategory;
 import com.platform.backend.entity.AppInfo;
 import com.platform.backend.entity.Dictionary;
 import com.platform.backend.service.AppCategoryService;
 import com.platform.backend.service.AppInfoService;
+import com.platform.backend.service.AppVersionService;
 import com.platform.backend.service.DictionaryService;
+import com.platform.constant.CommonsEnum;
+import com.platform.developer.entity.DevUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +37,8 @@ public class AppInfoListController {
     private AppCategoryService appCategoryService;
     @Resource
     private AppInfoService appInfoService;
+    @Resource
+    private AppVersionService appVersionService;
 
     /**
      * 用于跳转至手游列表展示页面
@@ -112,6 +120,60 @@ public class AppInfoListController {
         modelAndView.addObject("categoryLevel3List", categoryLevel3List);
         modelAndView.setViewName("developer/appinfoadd");
         return modelAndView;
+    }
+
+    /**
+     * 删除手游
+     *
+     * @param id
+     * @return
+     */
+    @RequestMapping("/developer/deleteAppInfo.do")
+    @ResponseBody
+    public Object deleteAppInfo(@RequestParam Long id) {
+        try {
+            //更新手游基础信息表（app_info）
+            int deleteAppInfo = appInfoService.deleteAppInfo(id);
+            //更新手游版本信息表（app_version）
+            int deleteAppVersionByAppInfoId = appVersionService.deleteAppVersionByAppInfoId(id);
+
+            if (deleteAppInfo <= 0 && deleteAppVersionByAppInfoId <= 0) {
+                return Result.fail("删除失败！");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.fail("系统正在维护中！");
+        }
+        return Result.ok("删除成功！");
+    }
+
+    /**
+     * 上架或者下架手游
+     *
+     * @param appId
+     * @param session
+     * @return
+     */
+
+    @RequestMapping(value = "/developer/sale.do")
+    public @ResponseBody Object sale(@RequestParam(value = "appId") Long appId, HttpSession session) {
+        System.out.println("appId = " + appId);
+        AppInfo appInfo = appInfoService.queryAppInfoById(appId);
+        DevUser devUser = (DevUser) session.getAttribute(CommonsEnum.SESSION_DEVELOPER_USER.getValue());
+        //封装数据
+        appInfo.setModifyBy(devUser.getId());
+        appInfo.setModifyDate(new Date());
+        try {
+            int updateAppInfoByAppInfo = appInfoService.updateAppInfoByAppInfo(appInfo);
+            if (updateAppInfoByAppInfo <= 0) {
+                return Result.fail("");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.fail("系统正在维护中！");
+        }
+        return Result.ok();
     }
 
 

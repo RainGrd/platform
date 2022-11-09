@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" isErrorPage="true" %>
 <%@include file="common/header.jsp" %>
 <div class="clearfix"></div>
 <div class="row">
@@ -20,8 +20,9 @@
                             <div class="form-group">
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12">软件名称</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input name="querySoftwareName" type="text" class="form-control col-md-7 col-xs-12"
-                                           value="${querySoftwareName }">
+                                    <input name="querySoftwareName" id="querySoftwareName" type="text"
+                                           class="form-control col-md-7 col-xs-12"
+                                           value="">
                                 </div>
                             </div>
                         </li>
@@ -297,5 +298,4 @@
     </div>
 </div>
 <%@include file="common/footer.jsp" %>
-<script src="${pageContext.request.contextPath }/statics/localjs/rollpage.js"></script>
 <script src="${pageContext.request.contextPath }/statics/localjs/appinfolist.js"></script>

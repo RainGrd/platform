@@ -111,7 +111,24 @@ public class AppInfoServiceImpl implements AppInfoService {
     }
 
     @Override
-    public int modifyAppInfoByAppInfoId(AppInfo appInfo) {
+    public int modifyAppInfoByAppInfo(AppInfo appInfo) {
+        return appInfoMapper.updateAppInfo(appInfo);
+    }
+
+    @Override
+    public int deleteAppInfo(Long appInfoId) {
+        return appInfoMapper.deleteAppInfoById(appInfoId);
+    }
+
+    @Override
+    public int updateAppInfoByAppInfo(AppInfo appInfo) {
+        Long status = appInfo.getStatus();
+        //如果手游等于已上架 则下架手游，反之则上架手游
+        if (status == 4) {
+            appInfo.setStatus(5L);
+        } else if (status == 5) {
+            appInfo.setStatus(4L);
+        }
         return appInfoMapper.updateAppInfo(appInfo);
     }
 }

@@ -134,7 +134,7 @@ $(function () {
 function queryAppInfoListConditionForPageAndCount(current, pageSize) {
     //收集参数
     let softwareName = $("#querySoftwareName").val();
-    let flatformId = $("#queryFlatformId").val();
+    let flatFormId = $("#queryFlatformId").val();
     let categoryLevel1 = $("#queryCategoryLevel1").val();
     let categoryLevel2 = $("#queryCategoryLevel2").val();
     let categoryLevel3 = $("#queryCategoryLevel3").val();
@@ -145,7 +145,7 @@ function queryAppInfoListConditionForPageAndCount(current, pageSize) {
         contentType: "application/json;charset=utf-8",
         data: JSON.stringify({
             softwareName: softwareName,
-            flatformId: flatformId,
+            flatFormId: flatFormId,
             categoryLevel1: categoryLevel1,
             categoryLevel2: categoryLevel2,
             categoryLevel3: categoryLevel3,

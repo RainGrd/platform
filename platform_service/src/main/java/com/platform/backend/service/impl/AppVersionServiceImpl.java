@@ -64,6 +64,11 @@ public class AppVersionServiceImpl implements AppVersionService {
     public int modifyAppVersion(AppVersion appVersion) {
         return appVersionMapper.updateAppVersion(appVersion);
     }
+
+    @Override
+    public int deleteAppVersionByAppInfoId(Long appInfoId) {
+        return appVersionMapper.deleteAppVersionByAppInfoId(appInfoId);
+    }
 }
 
 

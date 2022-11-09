@@ -103,7 +103,7 @@ $(function () {
 
         let queryCategoryLevel1 = $("#queryCategoryLevel1").val();
         console.log(queryCategoryLevel1);
-        queryAppInfoListConditionForPageAndCount(1, 5);
+        queryAppInfoListConditionForPage(1, 5);
         if (queryCategoryLevel1 !== '' && queryCategoryLevel1 != null) {
             $.ajax({
                 // async: false,
@@ -132,7 +132,7 @@ $(function () {
         $("#categoryLevel3").html("");
         var options = "<option value=\"\">--请选择--</option>";
         $("#categoryLevel3").html(options);
-        queryAppInfoListConditionForPageAndCount(1, 5);
+        queryAppInfoListConditionForPage(1, 5);
     });
     /**
      * 二级下拉列表选项变化事件
@@ -141,7 +141,7 @@ $(function () {
 
         var queryCategoryLevel2 = $("#queryCategoryLevel2").val();
         console.log(queryCategoryLevel2)
-        queryAppInfoListConditionForPageAndCount(1, 5);
+        queryAppInfoListConditionForPage(1, 5);
         if (queryCategoryLevel2 !== '' && queryCategoryLevel2 !== null) {
             $.ajax({
                 type: "GET",//请求类型
@@ -168,7 +168,7 @@ $(function () {
             $("#categoryLevel3").html("");
             var options = "<option value=\"\">--请选择--</option>";
             $("#categoryLevel3").html(options);
-            queryAppInfoListConditionForPageAndCount(1, 5);
+            queryAppInfoListConditionForPage(1, 5);
         }
     });
     /**

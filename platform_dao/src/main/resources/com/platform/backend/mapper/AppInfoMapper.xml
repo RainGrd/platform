@@ -66,6 +66,7 @@
         where id = #{id,jdbcType=BIGINT}
     </delete>
 
+
     <insert id="insert" parameterType="com.platform.backend.entity.AppInfo">
         <!--
           WARNING - @mbggenerated
@@ -410,8 +411,7 @@
                 </if>
             </if>
         </where>
-        group by app.software_name
-        order by app.modifyDate desc
+        order by app.creationDate desc
     </select>
     <select id="selectAppListConditionForCount" resultType="int" parameterType="map">
         select distinct count(1)
@@ -448,7 +448,7 @@
                 </if>
             </if>
         </where>
-        order by app.software_name desc
+        order by app.creationDate desc
     </select>
     <select id="selectAppInfoListConditionForPage" resultMap="AppInfoResultMap" parameterType="map">
         select
@@ -482,7 +482,7 @@
             and dic2.value_id=app.status
             and app.devStatus=0
             <if test="map!=null">
-                <if test="map.flatFormId!=null and map.flatFormId!=''">
+                <if test="map.status!=null and map.status!=''">
                     and app.status = #{map.status}
                 </if>
                 <if test="map.flatFormId!=null and map.flatFormId!=''">
@@ -502,8 +502,7 @@
                 </if>
             </if>
         </where>
-        group by app.software_name
-        order by app.modifyDate desc
+        order by app.creationDate desc
     </select>
     <select id="selectAppInfoListConditionForCount" resultType="int" parameterType="map">
         select distinct count(1)
@@ -522,7 +521,7 @@
             and dic2.value_id=app.status
             and app.devStatus=0
             <if test="map!=null">
-                <if test="map.flatFormId!=null and map.flatFormId!=''">
+                <if test="map.status!=null and map.status!=''">
                     and app.status = #{map.status}
                 </if>
                 <if test="map.flatFormId!=null and map.flatFormId!=''">
@@ -542,7 +541,7 @@
                 </if>
             </if>
         </where>
-        order by app.software_name desc
+        order by app.creationDate desc
     </select>
 
     <select id="selectAppInfoById" resultMap="AppInfoResultMap" parameterType="long">
@@ -586,17 +585,18 @@
           and dic2.type_code = 'APP_FLATFORM'
           and dic2.value_id = app.flatFormId
           and app.id = #{appInfoId}
+          and app.devStatus = 0
     </select>
 
     <select id="selectAll" resultMap="AppInfoResultMap">
         select
         <include refid="AppInfo_Column_List"/>
-        from t_app_info;
+        from t_app_info and devStatus=0;
     </select>
     <select id="selectAppInfoByApkName" resultMap="AppInfoResultMap" parameterType="string">
         select
         <include refid="AppInfo_Column_List"/>
-        from t_app_info where APK_name=#{apkName};
+        from t_app_info where APK_name=#{apkName} and devStatus=0;
     </select>
 
     <insert id="insertAppInfo" parameterType="appInfo">
@@ -697,5 +697,10 @@
             </if>
         </set>
         where id=#{appInfo.id};
+    </update>
+    <update id="deleteAppInfoById" parameterType="long">
+        update t_app_info
+        set devStatus = 1
+        where id = #{appInfoId};
     </update>
 </mapper>

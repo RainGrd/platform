@@ -1,12 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" isErrorPage="true"%>
 <%@include file="common/header.jsp"%>
 <div class="clearfix"></div>
 <div class="row">
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="x_panel">
       <div class="x_title">
-        <h2>查看手游信息 <i class="fa fa-user"></i><small>${devUserSession.devName}</small></h2>
+        <h2>查看手游信息 <i class="fa fa-user"></i><small>${sessionScope.devUserSession.devName}</small></h2>
              <div class="clearfix"></div>
       </div>
       <div class="x_title">
@@ -29,7 +29,7 @@
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input type="text" class="form-control col-md-7 col-xs-12" 
-              value="${appInfo.APKName}" readonly="readonly">
+              value="${appInfo.apkName}" readonly="readonly">
             </div>
           </div>
           
@@ -71,7 +71,7 @@
             <label class="control-label col-md-3 col-sm-3 col-xs-12"  for="select">所属平台 <span class="required">*</span></label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <input type="text" class="form-control col-md-7 col-xs-12" 
-              	value="${appInfo.flatformName}" readonly="readonly">
+              	value="${appInfo.flatFormName}" readonly="readonly">
             
             </div>
           </div>

@@ -12,6 +12,10 @@ $(function () {
         let appId = $('#id').val();
         let versionNo = $("#versionNo").val();
         let versionSize = $("#versionSize").val();
+        if (!isNumber(versionSize)) {
+            alert("版本大小只能为数字");
+            return false;
+        }
         let publishStatus = $("#publishStatus").val();
         let versionInfo = $("#versionInfo").val();
         let file = $("#a_downloadLink")[0].files[0];

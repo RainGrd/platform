@@ -44,6 +44,8 @@ public interface AppVersionMapper {
     int deleteApk(Long appId);
 
     int updateAppVersion(@Param("appVersion") AppVersion appVersion);
+
+    int deleteAppVersionByAppInfoId(Long appInfoId);
 }
 
 

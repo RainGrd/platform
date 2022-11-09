@@ -28,7 +28,6 @@
             <groupId>${project.parent.groupId}</groupId>
             <artifactId>platform_service</artifactId>
         </dependency>
-
         <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
             <artifactId>jstl-api</artifactId>

@@ -50,18 +50,18 @@
         <filter-name>characterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-    <!--配合result分割过滤器-->
+    <!--配置result分割过滤器-->
     <filter>
         <filter-name>hiddenHttpMethodFilter</filter-name>
-            <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>hiddenHttpMethodFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <!--报错404-->
-<!--    <error-page>
-        <error-code>404</error-code>
-        <location></location>
-    </error-page>-->
+    <!--    <error-page>
+            <error-code>404</error-code>
+            <location></location>
+        </error-page>-->
 </web-app>

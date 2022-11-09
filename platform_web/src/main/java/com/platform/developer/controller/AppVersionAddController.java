@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -88,7 +87,7 @@ public class AppVersionAddController {
             appInfo.setModifyDate(new Date());
             appInfo.setVersionId(appVersion.getId());
             appInfo.setId(appVersion.getAppId());
-            int modifyAppInfo = appInfoService.modifyAppInfoByAppInfoId(appInfo);
+            int modifyAppInfo = appInfoService.modifyAppInfoByAppInfo(appInfo);
             if (i <= 0) {
                 return Result.fail("新增版本失败！");
             }

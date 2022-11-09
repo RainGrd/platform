@@ -109,4 +109,6 @@ public interface AppInfoMapper {
     int deleteLogoById(Long id);
 
     int updateAppInfo(@Param("appInfo") AppInfo appInfo);
+
+    int deleteAppInfoById(Long appInfoId);
 }

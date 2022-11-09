@@ -159,8 +159,6 @@ $(function () {
         let status = statusValue;
         let appInfo = $("#appInfo").val();
         let file = $("#attach")[0].files[0];
-        let val = $("#attach").val();
-        console.log(file);
         //添加参数
         let formData = new FormData();
         formData.append("id", id)
@@ -179,7 +177,6 @@ $(function () {
         formData.append("logoPicPath", logoPicPath)
         formData.append("logoLocPath", logoLocPath)
         formData.append("file", file)
-        console.log(formData)
         //发送请求
         $.ajax({
             type: "POST",

@@ -18,6 +18,7 @@
         <result property="modifyDate" column="modifyDate" jdbcType="TIMESTAMP"/>
         <result property="apkLocPath" column="apkLocPath" jdbcType="VARCHAR"/>
         <result property="apkFileName" column="apkFileName" jdbcType="VARCHAR"/>
+        <result property="devStatus" column="devStatus" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="AppVersion_Column_List">
@@ -32,7 +33,7 @@
     <select id="selectAppVersionByVersionId" resultMap="AppVersionResultMap" parameterType="long">
         select
         <include refid="AppVersion_Column_List"/>
-        from t_app_version where id=#{versionId};
+        from t_app_version where id=#{versionId} and devStatus = 0;
     </select>
 
     <update id="updateAppVersionByAppId" parameterType="map">
@@ -81,13 +82,14 @@
              t_app_version ver
                  join t_app_info app on ver.appId = app.id
         where dic.type_code = 'PUBLISH_STATUS'
+          and ver.devStatus = 0
           and dic.value_id = ver.publishStatus
           and ver.appId = #{appId}
     </select>
     <select id="selectAppVersionListByAppId" resultMap="AppVersionResultMap">
         select
         <include refid="AppVersion_Column_List"/>
-        from t_app_version where appId=#{appId};
+        from t_app_version where appId=#{appId} and devStatus = 0;
     </select>
     <update id="deleteApk" parameterType="long">
         update t_app_version
@@ -136,5 +138,10 @@
             </if>
         </set>
         where id=#{appVersion.id};
+    </update>
+    <update id="deleteAppVersionByAppInfoId">
+        update t_app_version
+        set devStatus = 1
+        where appId = #{appInfoId};
     </update>
 </mapper>

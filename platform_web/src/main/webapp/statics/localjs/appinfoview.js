@@ -1,5 +1,7 @@
+
+
 $("#back").on("click",function(){
-	window.location.href = "../list";
+	window.location.href = "developer/toAppInfoList.do";
 });
 	
 	

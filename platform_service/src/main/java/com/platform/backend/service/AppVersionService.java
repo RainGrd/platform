@@ -35,4 +35,6 @@ public interface AppVersionService {
     int createAppVersion(AppVersion appVersion);
 
     int modifyAppVersion(AppVersion appVersion);
+
+    int deleteAppVersionByAppInfoId(Long appInfoId);
 }
