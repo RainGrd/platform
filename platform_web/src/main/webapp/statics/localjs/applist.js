@@ -145,7 +145,7 @@ function queryAppInfoListConditionForPageAndCount(current, pageSize) {
         contentType: "application/json;charset=utf-8",
         data: JSON.stringify({
             softwareName: softwareName,
-            flatformId: softwareName,
+            flatformId: flatformId,
             categoryLevel1: categoryLevel1,
             categoryLevel2: categoryLevel2,
             categoryLevel3: categoryLevel3,

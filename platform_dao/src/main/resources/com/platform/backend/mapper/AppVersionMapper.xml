@@ -62,6 +62,29 @@
                 #{appVersion.apkLocPath}, #{appVersion.apkFileName});
     </insert>
     <select id="selectAppVersionByAppId" resultMap="AppVersionResultMap" parameterType="long">
+        select ver.id,
+               ver.appId,
+               app.software_name as appName,
+               ver.versionNo,
+               ver.versionInfo,
+               ver.publishStatus,
+               dic.value_name    as publishStatusName,
+               ver.downloadLink,
+               ver.versionSize,
+               ver.createdBy,
+               ver.creationDate,
+               ver.modifyBy,
+               ver.modifyDate,
+               ver.apkLocPath,
+               ver.apkFileName
+        from t_data_dictionary dic,
+             t_app_version ver
+                 join t_app_info app on ver.appId = app.id
+        where dic.type_code = 'PUBLISH_STATUS'
+          and dic.value_id = ver.publishStatus
+          and ver.appId = #{appId}
+    </select>
+    <select id="selectAppVersionListByAppId" resultMap="AppVersionResultMap">
         select
         <include refid="AppVersion_Column_List"/>
         from t_app_version where appId=#{appId};
@@ -71,5 +94,47 @@
         set apkLocPath = null,
             apkFileName=null
         where appId = #{appId};
+    </update>
+    <update id="updateAppVersion" parameterType="appVersion">
+        update t_app_version
+        <set>
+            <if test="appVersion.appId!=null and appVersion.appId!=''">
+                appId=#{appVersion.appId},
+            </if>
+            <if test="appVersion.versionNo!=null and appVersion.versionNo!=''">
+                versionNo=#{appVersion.versionNo},
+            </if>
+            <if test="appVersion.versionInfo!=null and appVersion.versionInfo!=''">
+                versionInfo=#{appVersion.versionInfo},
+            </if>
+            <if test="appVersion.publishStatus!=null and appVersion.publishStatus!=''">
+                publishStatus=#{appVersion.publishStatus},
+            </if>
+            <if test="appVersion.downloadLink!=null and appVersion.downloadLink!=''">
+                downloadLink=#{appVersion.downloadLink},
+            </if>
+            <if test="appVersion.versionSize!=null and appVersion.versionSize!=''">
+                versionSize=#{appVersion.versionSize},
+            </if>
+            <if test="appVersion.createdBy!=null and appVersion.createdBy!=''">
+                createdBy=#{appVersion.createdBy},
+            </if>
+            <if test="appVersion.creationDate!=null">
+                creationDate=#{appVersion.creationDate},
+            </if>
+            <if test="appVersion.modifyBy!=null and appVersion.modifyBy!=''">
+                modifyBy=#{appVersion.modifyBy},
+            </if>
+            <if test="appVersion.modifyDate!=null">
+                modifyDate=#{appVersion.modifyDate},
+            </if>
+            <if test="appVersion.apkLocPath!=null and appVersion.apkLocPath!=''">
+                apkLocPath=#{appVersion.apkLocPath},
+            </if>
+            <if test="appVersion.apkFileName!=null and appVersion.apkFileName!=''">
+                apkFileName=#{appVersion.apkFileName},
+            </if>
+        </set>
+        where id=#{appVersion.id};
     </update>
 </mapper>

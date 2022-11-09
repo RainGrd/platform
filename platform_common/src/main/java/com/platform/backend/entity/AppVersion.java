@@ -4,14 +4,16 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
 /**
- * 
  * @TableName t_app_version
  */
 @Data
@@ -27,6 +29,8 @@ public class AppVersion implements Serializable {
      */
     private Long appId;
 
+    private String appName;
+
     /**
      * 版本号
      */
@@ -41,6 +45,8 @@ public class AppVersion implements Serializable {
      * 发布状态（来源于：data_dictionary，1 不发布 2 已发布 3 预发布）
      */
     private Long publishStatus;
+
+    private String publishStatusName;
 
     /**
      * 下载链接
@@ -60,7 +66,7 @@ public class AppVersion implements Serializable {
     /**
      * 创建时间
      */
-    private LocalDateTime creationDate;
+    private Date creationDate;
 
     /**
      * 更新者（来源于dev_user开发者信息表的用户id）
@@ -70,7 +76,7 @@ public class AppVersion implements Serializable {
     /**
      * 最新更新时间
      */
-    private LocalDateTime modifyDate;
+    private Date modifyDate;
 
     /**
      * apk文件的服务器存储路径

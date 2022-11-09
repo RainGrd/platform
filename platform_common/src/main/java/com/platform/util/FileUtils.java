@@ -3,11 +3,9 @@ package com.platform.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,36 +17,42 @@ import org.springframework.web.multipart.MultipartFile;
  *
  * @author gzlx
  */
-public class ImageUtils {
+public class FileUtils {
     /**
      * 上传图片
      *
      * @param request
-     * @param pictureFile
+     * @param file
      * @throws IOException
      */
     public static String upload(HttpServletRequest request,
-                                MultipartFile pictureFile) throws IOException {
-        String imgPath = null;//装配后的图片地址
+                                MultipartFile file) throws IOException {
+        String path = null;//装配后的图片地址
         //上传图片
-        if (pictureFile != null && !pictureFile.isEmpty()) {
-            // 使用UUID给图片重命名，并去掉四个“-”
-            String name = UUIDUtils.getUUID();
+        if (file != null && !file.isEmpty()) {
             // 获取文件的扩展名
-            String ext = FilenameUtils.getExtension(pictureFile
+            String ext = FilenameUtils.getExtension(file
                     .getOriginalFilename());
-            // 设置图片上传路径
-            String url = request.getServletContext()
-                    .getRealPath("statics/uploadfiles/");
-            System.out.println(url);
+            // 使用UUID给文件重命名，并去掉四个“-”
+            String fileName = UUIDUtils.getUUID();
+            // 设置文件上传路径
+            String url = CommonUtil.setFileAbsPath(request) + "statics\\uploadfiles\\";
+            System.out.println("url = " + url);
+            //如何文件名称等于apk则使用原文件名
+            if ("apk".equals(ext)) {
+                fileName = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf("."));
+                System.out.println("fileName = " + fileName);
+            }
             // 检验文件夹是否存在
-            isFolderExists(url);
-            // 以绝对路径保存重名命后的图片
-            pictureFile.transferTo(new File(url + File.separator + name + "." + ext));
-            // 装配图片地址
-            imgPath = "statics/uploadfiles/" + name + "." + ext;
+            if (isFolderExists(url)) {
+                // 以相对路径保存重名命后的文件
+                file.transferTo(new File(url + File.separator + fileName + "." + ext));
+                // 装配文件地址
+                path = "statics/uploadfiles/" + fileName + "." + ext;
+            }
+
         }
-        return imgPath;
+        return path;
     }
 
     /**
@@ -59,13 +63,8 @@ public class ImageUtils {
      */
     public static boolean isFolderExists(String strFolder) {
         File file = new File(strFolder);
-
         if (!file.exists()) {
-            if (file.mkdir()) {
-                return true;
-            } else {
-                return false;
-            }
+            return file.mkdir();
         }
         System.out.println("-----------------文件上传路径：" + strFolder);
         return true;

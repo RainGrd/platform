@@ -175,7 +175,7 @@ $(function () {
      * 返回按钮
      */
     $("#back").on("click", function () {
-        window.location.href = '/developer/toAppInfoList.do'
+        window.location.href = 'developer/toAppInfoList.do'
     });
     /**
      *
@@ -320,7 +320,7 @@ $(function () {
         // Ajax 异步提交文件
         $.ajax({
             type: "post",
-            url: "/developer/send.do",
+            url: "developer/insertSend.do",
             data: formData,//上一步的FormData
             cache: false,//不缓存数据
             processData: false,//不转换数据
@@ -332,7 +332,7 @@ $(function () {
                     alert(data.message);
                 } else {
                     //跳转页面
-                    window.location.href = '/developer/toAppInfoList.do'
+                    window.location.href = 'developer/toAppInfoList.do'
                 }
             }
         });

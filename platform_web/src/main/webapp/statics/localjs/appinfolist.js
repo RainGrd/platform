@@ -123,18 +123,21 @@ $(function () {
     $("#tableData").on("click", ".addVersion", function () {
         var obj = $(this);
         console.log(1);
-        window.location.href = "appversionadd?id=" + obj.attr("appInfoId");
+        window.location.href = "developer/toAppVersionAdd.do?id=" + obj.attr("appInfoId");
     });
-    $(".modifyVersion").on("click", function () {
+    /**
+     * 修改手游信息的按钮点击事件
+     */
+    $("#tableData").on("click", '.modifyVersion', function () {
         var obj = $(this);
         var status = obj.attr("status");
-        var versionid = obj.attr("versionid");
+        var versionId = obj.attr("versionId");
         var appInfoId = obj.attr("appInfoId");
-        if (status == "1" || status == "3") {//待审核、审核未通过状态下才可以进行修改操作
-            if (versionid == null || versionid == "") {
+        if (status === "1" || status === "3") {//待审核、审核未通过状态下才可以进行修改操作
+            if (versionId == null || versionId === "") {
                 alert("该APP应用无版本信息，请先增加版本信息！");
             } else {
-                window.location.href = "appversionmodify?vid=" + versionid + "&aid=" + appInfoId;
+                window.location.href = "developer/toAppVersionModify.do?versionId=" + versionId + "&appInfoId=" + appInfoId;
             }
         } else {
             alert("该APP应用的状态为：【" + obj.attr("statusName") + "】,不能修改其版本信息，只可进行【新增版本】操作！");
@@ -274,6 +277,7 @@ $(function () {
  */
 function queryAppInfoListConditionForPageAndCount(current, pageSize) {
     //收集参数
+    let status = $("#queryStatus").val();
     let softwareName = $("#querySoftwareName").val();
     let flatformId = $("#queryFlatformId").val();
     let categoryLevel1 = $("#queryCategoryLevel1").val();
@@ -285,8 +289,9 @@ function queryAppInfoListConditionForPageAndCount(current, pageSize) {
         dataType: 'json',
         contentType: "application/json;charset=utf-8",
         data: JSON.stringify({
+            status: status,
             softwareName: softwareName,
-            flatformId: softwareName,
+            flatformId: flatformId,
             categoryLevel1: categoryLevel1,
             categoryLevel2: categoryLevel2,
             categoryLevel3: categoryLevel3,
@@ -337,7 +342,7 @@ function queryAppInfoListConditionForPageAndCount(current, pageSize) {
                     '               data-original-title="新增APP版本信息">新增版本</a>\n' +
                     '        </li>\n' +
                     '        <li><a class="modifyVersion"\n' +
-                    '               appInfoId="' + obj.id + '" versionid="' + obj.versionId + '"\n' +
+                    '               appInfoId="' + obj.id + '" versionId="' + obj.versionId + '"\n' +
                     '               status="' + obj.status + '"\n' +
                     '               statusName="' + obj.statusName + '"\n' +
                     '               data-toggle="tooltip" data-placement="top" title=""\n' +

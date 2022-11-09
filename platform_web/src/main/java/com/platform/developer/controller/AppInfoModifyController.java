@@ -6,15 +6,22 @@ import com.platform.backend.entity.Dictionary;
 import com.platform.backend.service.AppInfoService;
 import com.platform.backend.service.AppVersionService;
 import com.platform.backend.service.DictionaryService;
+import com.platform.constant.CommonsEnum;
+import com.platform.developer.entity.DevUser;
+import com.platform.util.CommonUtil;
+import com.platform.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,7 +49,8 @@ public class AppInfoModifyController {
      * @return
      */
     @RequestMapping("/developer/toAppInfoModify.do")
-    public ModelAndView toAppInfoModify(@RequestParam Long id) {
+    public ModelAndView toAppInfoModify(@RequestParam Long id, HttpServletRequest request) {
+
         ModelAndView modelAndView = new ModelAndView();
         AppInfo appInfo = appInfoService.queryAppInfoById(id);
         List<Dictionary> dictionaryList = dictionaryService.queryByTypeCodeDictionaryList("APP_FLATFORM");
@@ -52,7 +60,15 @@ public class AppInfoModifyController {
         return modelAndView;
     }
 
-    @RequestMapping("/developer/delFile.do")
+    /**
+     * 删除文件
+     *
+     * @param id
+     * @param flag
+     * @return
+     */
+
+    @GetMapping("/developer/delFile.do")
     @ResponseBody
     public Object delFile(@RequestParam Long id, @RequestParam String flag) {
         if (flag == null || "".equals(flag) || id == null) {
@@ -60,8 +76,9 @@ public class AppInfoModifyController {
         }
         File file = null;
         if ("logo".equals(flag)) {
+            AppInfo appInfo = appInfoService.queryAppInfoById(id);
             //删除服务器存放的图片文件
-            String logoLocPath = appInfoService.queryAppInfoById(id).getLogoLocPath();
+            String logoLocPath = appInfo.getLogoLocPath();
             file = new File(logoLocPath);
             if (!file.exists()) {
                 return Result.fail("文件不存在");
@@ -79,7 +96,7 @@ public class AppInfoModifyController {
                 }
             }
         } else if ("apk".equals(flag)) {
-            String apkLocPath = appVersionService.queryAppVersionByAppId(id).getApkLocPath();
+            String apkLocPath = appVersionService.queryAppVersionByVersionId(id).getApkLocPath();
             file = new File(apkLocPath);
             if (!file.exists()) {
                 return Result.fail("文件不存在！");
@@ -99,4 +116,40 @@ public class AppInfoModifyController {
         }
         return Result.ok("删除成功！");
     }
+
+    /**
+     * 修改AppInfo
+     *
+     * @param appInfo
+     * @param file
+     * @param request
+     * @param session
+     * @return
+     * @throws IOException
+     */
+    @PostMapping("/developer/updateSend.do")
+    @ResponseBody
+    public Object updateSend(AppInfo appInfo, MultipartFile file, HttpServletRequest request, HttpSession session) throws IOException {
+        System.out.println("appInfo = " + appInfo);
+        DevUser devUser = (DevUser) session.getAttribute(CommonsEnum.SESSION_DEVELOPER_USER.getValue());
+        if (file != null) {
+            System.out.println("file = " + file);
+            String upload = FileUtils.upload(request, file);
+            appInfo.setLogoPicPath(upload);
+            appInfo.setLogoLocPath(CommonUtil.setFileAbsPath(request) + CommonUtil.strReplace(upload));
+        }
+        appInfo.setModifyBy(devUser.getId());
+        appInfo.setModifyDate(new Date());
+        try {
+            int modifyAppInfo = appInfoService.modifyAppInfoByAppInfoId(appInfo);
+            if (modifyAppInfo <= 0) {
+                return Result.fail("修改失败！");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.fail("系统正在维护中");
+        }
+        return Result.ok();
+    }
+
 }

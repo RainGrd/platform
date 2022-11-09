@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -85,6 +86,7 @@ public class AppInfoServiceImpl implements AppInfoService {
 
     @Override
     public int addAppInfo(AppInfo appInfo) {
+
         //封装数据
         AppVersion appVersion = new AppVersion();
         appVersion.setAppId(appInfo.getId());
@@ -94,8 +96,9 @@ public class AppInfoServiceImpl implements AppInfoService {
         appVersion.setDownloadLink("statics/uploadfiles/" + appInfo.getApkName() + "-V1.1.2.apk");
         appVersion.setVersionSize(new BigDecimal(1));
         appVersion.setCreatedBy(appInfo.getId());
-        appVersion.setCreationDate(LocalDateTime.now());
-        appVersion.setApkLocPath("D:/materials/BeyondPlatform/platform/platform_web/src/main/webapp/statics/uploadfiles" + appInfo.getApkName() + "-V1.1.2.apk");
+        appVersion.setCreationDate(new Date());
+        System.out.println(appInfo.getLogoLocPath().substring(0, appInfo.getLogoLocPath().lastIndexOf("webapp") + "webapp".length() + 1));
+        appVersion.setApkLocPath(appInfo.getLogoLocPath().substring(0, appInfo.getLogoLocPath().lastIndexOf("webapp") + "webapp".length() + 1) + appVersion.getDownloadLink());
         appVersion.setApkFileName(appInfo.getApkName() + appVersion.getVersionNo() + ".apk");
         //新增版本
         appVersionMapper.insertAppVersion(appVersion);
@@ -105,5 +108,10 @@ public class AppInfoServiceImpl implements AppInfoService {
     @Override
     public int deleteLogo(Long id) {
         return appInfoMapper.deleteLogoById(id);
+    }
+
+    @Override
+    public int modifyAppInfoByAppInfoId(AppInfo appInfo) {
+        return appInfoMapper.updateAppInfo(appInfo);
     }
 }

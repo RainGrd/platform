@@ -10,11 +10,12 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <form class="form-horizontal form-label-left" action="appinfomodifysave" method="post"
+                <form class="form-horizontal form-label-left" method="post"
                       enctype="multipart/form-data">
                     <input type="hidden" name="id" id="id" value="${appInfo.id}">
                     <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">软件名称 <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="softwareName">软件名称 <span
+                                class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <input id="softwareName" class="form-control col-md-7 col-xs-12"
@@ -24,7 +25,7 @@
                         </div>
                     </div>
                     <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">APK名称 <span
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="APKName">APK名称 <span
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -34,7 +35,7 @@
                     </div>
 
                     <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">支持ROM <span
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="supportROM">支持ROM <span
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -45,7 +46,8 @@
                         </div>
                     </div>
                     <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">界面语言 <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="interfaceLanguage">界面语言 <span
+                                class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <input id="interfaceLanguage" class="form-control col-md-7 col-xs-12"
@@ -55,7 +57,7 @@
                         </div>
                     </div>
                     <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">软件大小 <span
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="softwareSize">软件大小 <span
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -67,7 +69,7 @@
                     </div>
 
                     <div class="item form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">下载次数 <span
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="downloads">下载次数 <span
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
@@ -125,6 +127,7 @@
                                 class="required">*</span>
                         </label>
                         <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="hidden" value="${appInfo.status}" id="status"/>
                             <input id="statusName" type="text" class="form-control col-md-7 col-xs-12"
                                    name="statusName" value="${appInfo.statusName}" readonly="readonly">
                         </div>
@@ -153,13 +156,13 @@
                                 </p>
                             </div>
                             <div id="logoFile"></div>
-                            ${fileUploadError }
+                            ${fileUploadError}
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-6 col-md-offset-3">
                             <c:if test="${appInfo.status == 3}">
-                                <button id="send" type="button" name="status" value="1" class="btn btn-success">
+                                <button id="sendAudit" type="button" name="status" value="1" class="btn btn-success">
                                     保存并再次提交审核
                                 </button>
                             </c:if>

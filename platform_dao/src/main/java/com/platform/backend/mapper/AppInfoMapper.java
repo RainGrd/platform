@@ -107,4 +107,6 @@ public interface AppInfoMapper {
     AppInfo selectAppInfoByApkName(@Param("apkName") String apkName);
 
     int deleteLogoById(Long id);
+
+    int updateAppInfo(@Param("appInfo") AppInfo appInfo);
 }

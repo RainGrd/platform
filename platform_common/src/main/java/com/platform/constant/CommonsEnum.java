@@ -8,8 +8,8 @@ package com.platform.constant;
  * Description: 公共的常量类
  */
 public enum CommonsEnum {
-    YMD_HMS("yyyy-MM-dd"),
-    YMD("yyyy-MM-dd HH:mm:ss"),
+    YMD("yyyy-MM-dd"),
+    YMD_HMS("yyyy-MM-dd HH:mm:ss"),
     HMS("HH:mm:ss"),
     /**
      * 成功

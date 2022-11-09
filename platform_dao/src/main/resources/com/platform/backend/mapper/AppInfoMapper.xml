@@ -555,6 +555,7 @@
                app.updateDate,
                app.devId,
                app.appInfo,
+               app.status,
                dic1.value_name  as statusName,
                app.onSaleDate,
                app.offSaleDate,
@@ -580,11 +581,11 @@
                  join t_app_category ca2 on ca2.id = app.categoryLevel2
                  join t_app_category ca3 on ca3.id = app.categoryLevel3
                  join t_app_version tav on tav.id = app.versionId
-        where app.id = #{appInfoId}
+        where dic1.type_code = 'APP_STATUS'
           and dic1.value_id = app.status
-          and dic2.value_id = app.flatFormId
-          and dic1.type_code = 'APP_STATUS'
           and dic2.type_code = 'APP_FLATFORM'
+          and dic2.value_id = app.flatFormId
+          and app.id = #{appInfoId}
     </select>
 
     <select id="selectAll" resultMap="AppInfoResultMap">
@@ -621,5 +622,80 @@
         set logoPicPath=null,
             logoLocPath=null
         where id = #{id};
+    </update>
+    <update id="updateAppInfo" parameterType="appInfo">
+        update t_app_info
+        <set>
+            <if test="appInfo.softwareName != null and appInfo.softwareName!=''">
+                software_name = #{appInfo.softwareName,jdbcType=VARCHAR},
+            </if>
+            <if test="appInfo.apkName != null and appInfo.apkName!=''">
+                APK_name = #{appInfo.apkName,jdbcType=VARCHAR},
+            </if>
+            <if test="appInfo.supportROM != null and appInfo.supportROM!=''">
+                supportROM = #{appInfo.supportROM,jdbcType=VARCHAR},
+            </if>
+            <if test="appInfo.interfaceLanguage != null and appInfo.interfaceLanguage!=''">
+                interfaceLanguage = #{appInfo.interfaceLanguage,jdbcType=VARCHAR},
+            </if>
+            <if test="appInfo.softwareSize != null and appInfo.softwareSize!=''">
+                softwareSize = #{appInfo.softwareSize,jdbcType=DECIMAL},
+            </if>
+            <if test="appInfo.updateDate != null">
+                updateDate = #{appInfo.updateDate,jdbcType=DATE},
+            </if>
+            <if test="appInfo.devId != null and appInfo.devId!=''">
+                devId = #{appInfo.devId,jdbcType=BIGINT},
+            </if>
+            <if test="appInfo.appInfo != null and appInfo.appInfo!=''">
+                appInfo = #{appInfo.appInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="appInfo.status != null and appInfo.status!=''">
+                status = #{appInfo.status,jdbcType=BIGINT},
+            </if>
+            <if test="appInfo.onSaleDate != null">
+                onSaleDate = #{appInfo.onSaleDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="appInfo.offSaleDate != null ">
+                offSaleDate = #{appInfo.offSaleDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="appInfo.flatFormId != null and appInfo.flatFormId!=''">
+                flatFormId = #{appInfo.flatFormId,jdbcType=BIGINT},
+            </if>
+            <if test="appInfo.categoryLevel3 != null and appInfo.categoryLevel3!=''">
+                categoryLevel3 = #{appInfo.categoryLevel3,jdbcType=BIGINT},
+            </if>
+            <if test="appInfo.downloads != null and appInfo.downloads!=''">
+                downloads = #{appInfo.downloads,jdbcType=BIGINT},
+            </if>
+            <if test="appInfo.createdBy != null and appInfo.createdBy!=''">
+                createdBy = #{appInfo.createdBy,jdbcType=BIGINT},
+            </if>
+            <if test="appInfo.creationDate != null ">
+                creationDate = #{appInfo.creationDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="appInfo.modifyBy != null and appInfo.modifyBy!=''">
+                modifyBy = #{appInfo.modifyBy,jdbcType=BIGINT},
+            </if>
+            <if test="appInfo.modifyDate != null">
+                modifyDate = #{appInfo.modifyDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="appInfo.categoryLevel1 != null and appInfo.categoryLevel1!=''">
+                categoryLevel1 = #{appInfo.categoryLevel1,jdbcType=BIGINT},
+            </if>
+            <if test="appInfo.categoryLevel2 != null and appInfo.categoryLevel2!=''">
+                categoryLevel2 = #{appInfo.categoryLevel2,jdbcType=BIGINT},
+            </if>
+            <if test="appInfo.logoPicPath != null and appInfo.logoPicPath!=''">
+                logoPicPath = #{appInfo.logoPicPath,jdbcType=VARCHAR},
+            </if>
+            <if test="appInfo.logoLocPath != null and appInfo.logoLocPath!=''">
+                logoLocPath = #{appInfo.logoLocPath,jdbcType=VARCHAR},
+            </if>
+            <if test="appInfo.versionId != null and appInfo.versionId!=''">
+                versionId = #{appInfo.versionId},
+            </if>
+        </set>
+        where id=#{appInfo.id};
     </update>
 </mapper>

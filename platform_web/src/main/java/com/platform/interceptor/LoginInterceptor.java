@@ -21,11 +21,12 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
         BackendUser backendUser = (BackendUser) session.getAttribute(CommonsEnum.SESSION_BACKEND_USER.getValue());
-        if (backendUser == null) {
-            //重定向403页面
-            response.sendRedirect(request.getContextPath() + "/403.jsp");
-            return false;
+        DevUser devUser = (DevUser) session.getAttribute(CommonsEnum.SESSION_DEVELOPER_USER.getValue());
+        if (backendUser != null || devUser != null) {
+            return true;
         }
-        return true;
+        //重定向403页面
+        response.sendRedirect(request.getContextPath() + "/403.jsp");
+        return false;
     }
 }

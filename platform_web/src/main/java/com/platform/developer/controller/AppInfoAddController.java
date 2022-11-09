@@ -5,7 +5,8 @@ import com.platform.backend.entity.AppInfo;
 import com.platform.backend.service.AppInfoService;
 import com.platform.constant.CommonsEnum;
 import com.platform.developer.entity.DevUser;
-import com.platform.util.ImageUtils;
+import com.platform.util.CommonUtil;
+import com.platform.util.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,10 +51,10 @@ public class AppInfoAddController {
     @ResponseBody
     public Result imgUpload(HttpServletRequest request, MultipartFile multipartFile) throws IOException {
         if (multipartFile == null) {
-            Result.fail("图片内容不能为空！");
+            Result.fail("文件不能为空！");
         }
         //上传图片
-        String upload = ImageUtils.upload(request, multipartFile);
+        String upload = FileUtils.upload(request, multipartFile);
         System.out.println("upload = " + upload);
         // 封装数据
         AppInfo appInfo = new AppInfo();
@@ -66,13 +67,13 @@ public class AppInfoAddController {
      *
      * @return
      */
-    @PostMapping("/developer/send.do")
+    @PostMapping("/developer/insertSend.do")
     @ResponseBody
-    public Result send(AppInfo appInfo, MultipartFile file, HttpServletRequest request, HttpSession session) throws IOException {
+    public Result insertSend(AppInfo appInfo, MultipartFile file, HttpServletRequest request, HttpSession session) throws IOException {
         System.out.println("appInfo = " + appInfo);
         System.out.println("file = " + file);
         //上传图片
-        String upload = ImageUtils.upload(request, file);
+        String upload = FileUtils.upload(request, file);
         System.out.println("upload = " + upload);
         // 封装数据
         DevUser devUser = (DevUser) session.getAttribute(CommonsEnum.SESSION_DEVELOPER_USER.getValue());
@@ -81,8 +82,9 @@ public class AppInfoAddController {
         appInfo.setCreationDate(new Date());
         appInfo.setLogoPicPath(upload);
         appInfo.setVersionId(33L);
-        System.out.println("绝对路径" + request.getServletPath());
-        appInfo.setLogoLocPath(request.getContextPath() + upload);
+        //获取项目绝对路径
+        String absPath = CommonUtil.setFileAbsPath(request);
+        appInfo.setLogoLocPath(absPath + upload);
         //插入数据
         try {
             int i = appInfoService.addAppInfo(appInfo);

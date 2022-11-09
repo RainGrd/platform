@@ -8,6 +8,7 @@
 out
 gen
 statics/uploadfiles/
+test
 # Compiled class file
 *.class
 

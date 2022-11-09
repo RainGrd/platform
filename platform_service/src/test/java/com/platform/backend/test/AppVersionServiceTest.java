@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Copyright (C), 2017-2022, RainGrd
@@ -38,5 +39,22 @@ public class AppVersionServiceTest {
         BigDecimal bigDecimal = new BigDecimal("3");
             appVersion.setVersionSize(bigDecimal);
         appVersionService.updateAppVersionByAppId(appVersion);*/
+    }
+
+    @Test
+    public void queryAppVersionByAppIdTest() {
+        List<AppVersion> appVersions = appVersionService.queryAppVersionByAppId(62L);
+        System.out.println("appVersions = " + appVersions);
+        System.out.println(appVersions.get(appVersions.size()-1));
+    }
+
+    @Test
+    public void getAppVersionListByAppIdTest() {
+        List<AppVersion> appVersions = appVersionService.getAppVersionListByAppId(62L);
+        System.out.println("appVersions = " + appVersions);
+        for (AppVersion appVersion : appVersions) {
+            System.out.println("appVersion = " + appVersion);
+        }
+        System.out.println(appVersions.get(appVersions.size()-1));
     }
 }

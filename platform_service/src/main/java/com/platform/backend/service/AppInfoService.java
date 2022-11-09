@@ -48,4 +48,6 @@ public interface AppInfoService {
     int addAppInfo(AppInfo appInfo);
 
     int deleteLogo(Long id);
+
+    int modifyAppInfoByAppInfoId(AppInfo appInfo);
 }

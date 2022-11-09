@@ -3,6 +3,7 @@ package com.platform.backend.mapper;
 import com.platform.backend.entity.AppVersion;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,9 +35,15 @@ public interface AppVersionMapper {
      */
     int insertAppVersion(@Param("appVersion") AppVersion appVersion);
 
-    AppVersion selectAppVersionByAppId(Long appId);
+    List<AppVersion> selectAppVersionByAppId(Long appId);
+
+
+    List<AppVersion> selectAppVersionListByAppId(Long appId);
+
 
     int deleteApk(Long appId);
+
+    int updateAppVersion(@Param("appVersion") AppVersion appVersion);
 }
 
 

@@ -48,7 +48,7 @@ public class AppInfoServiceTest {
 
     @Test
     public void queryAppInfoByIdTest() {
-        AppInfo appInfo = appInfoService.queryAppInfoById(59L);
+        AppInfo appInfo = appInfoService.queryAppInfoById(62L);
         System.out.println("appInfo = " + appInfo);
     }
 

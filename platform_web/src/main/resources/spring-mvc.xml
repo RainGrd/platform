@@ -58,11 +58,14 @@
         <mvc:interceptor>
             <!--配置拦截器类-->
             <mvc:mapping path="/backend/**"/>
+            <mvc:mapping path="/developer/**"/>
             <!--定义放行路径-->
             <mvc:exclude-mapping path="/backend/toFZT.do"/>
             <mvc:exclude-mapping path="/backend/403.jsp"/>
             <mvc:exclude-mapping path="/backend/login.do"/>
             <mvc:exclude-mapping path="/backend/backendLogin.do"/>
+            <mvc:exclude-mapping path="/developer/developerLogin.do"/>
+            <mvc:exclude-mapping path="/developer/devLogin.do"/>
             <mvc:exclude-mapping path="/js/**"/>
             <mvc:exclude-mapping path="/statics/**"/>
             <mvc:exclude-mapping path="/uploadfiles/**"/>

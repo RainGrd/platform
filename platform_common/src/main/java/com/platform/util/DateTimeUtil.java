@@ -8,6 +8,8 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.Date;
 
 /**
@@ -105,8 +107,15 @@ public class DateTimeUtil {
      * 将字符串转换为时间 格式为：yyyy-MM-dd
      */
     public static LocalDateTime convertTimeToLocalDateTimeYMD(String time) {
-        DateTimeFormatter ftf = DateTimeFormatter.ofPattern(CommonsEnum.YMD.getValue());
-        return LocalDateTime.parse(time, ftf);
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .appendPattern("yyyy-MM-dd[['T'HH][:mm][:ss]]")
+                .parseDefaulting(ChronoField.HOUR_OF_DAY, 0)
+                .parseDefaulting(ChronoField.MINUTE_OF_HOUR, 0)
+                .parseDefaulting(ChronoField.SECOND_OF_MINUTE, 0)
+                .parseDefaulting(ChronoField.MILLI_OF_SECOND, 0)
+                .toFormatter();
+//        DateTimeFormatter ftf = DateTimeFormatter.ofPattern(CommonsEnum.YMD.getValue());
+        return LocalDateTime.parse(time, formatter);
     }
 
     /**

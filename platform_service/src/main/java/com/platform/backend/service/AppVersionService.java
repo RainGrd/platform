@@ -2,6 +2,7 @@ package com.platform.backend.service;
 
 import com.platform.backend.entity.AppVersion;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,7 +24,15 @@ public interface AppVersionService {
      */
     int updateAppVersionByAppId(Map<String, String> map);
 
-    AppVersion queryAppVersionByAppId(Long appId);
+    List<AppVersion> queryAppVersionByAppId(Long appId);
+
+
+    List<AppVersion> getAppVersionListByAppId(Long appId);
+
 
     int deleteApk(Long appId);
+
+    int createAppVersion(AppVersion appVersion);
+
+    int modifyAppVersion(AppVersion appVersion);
 }
