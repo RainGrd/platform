@@ -56,7 +56,6 @@ public class AppVersionServiceImpl implements AppVersionService {
 
     @Override
     public int createAppVersion(AppVersion appVersion) {
-
         return appVersionMapper.insertAppVersion(appVersion);
     }
 

@@ -60,7 +60,7 @@ public class AppListController {
         modelAndView.addObject("categoryLevel2List", categoryLevel2List);
         modelAndView.addObject("categoryLevel3List", categoryLevel3List);
         // 设置跳转视图
-        modelAndView.setViewName("/developer/applist");
+        modelAndView.setViewName("/backend/applist");
         return modelAndView;
     }
 

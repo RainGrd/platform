@@ -100,10 +100,8 @@ $(function () {
      * 一级下拉列表选项变化事件
      */
     $("#categoryLevel1").change(function () {
-
-        let queryCategoryLevel1 = $("#queryCategoryLevel1").val();
+        let queryCategoryLevel1 = $("#categoryLevel1").val();
         console.log(queryCategoryLevel1);
-        queryAppInfoListConditionForPage(1, 5);
         if (queryCategoryLevel1 !== '' && queryCategoryLevel1 != null) {
             $.ajax({
                 // async: false,
@@ -132,16 +130,14 @@ $(function () {
         $("#categoryLevel3").html("");
         var options = "<option value=\"\">--请选择--</option>";
         $("#categoryLevel3").html(options);
-        queryAppInfoListConditionForPage(1, 5);
     });
     /**
      * 二级下拉列表选项变化事件
      */
     $("#categoryLevel2").change(function () {
 
-        var queryCategoryLevel2 = $("#queryCategoryLevel2").val();
+        var queryCategoryLevel2 = $("#categoryLevel2").val();
         console.log(queryCategoryLevel2)
-        queryAppInfoListConditionForPage(1, 5);
         if (queryCategoryLevel2 !== '' && queryCategoryLevel2 !== null) {
             $.ajax({
                 type: "GET",//请求类型
@@ -168,7 +164,6 @@ $(function () {
             $("#categoryLevel3").html("");
             var options = "<option value=\"\">--请选择--</option>";
             $("#categoryLevel3").html(options);
-            queryAppInfoListConditionForPage(1, 5);
         }
     });
     /**
@@ -190,7 +185,7 @@ $(function () {
         //ajax后台验证--APKName是否已存在
         $.ajax({
             type: "GET",//请求类型
-            url: "/developer/apkexist.do",//请求的url
+            url: "developer/apkexist.do",//请求的url
             data: {apkName: apkName},//请求参数
             dataType: "json",//ajax接口（请求url）返回的数据类型
             success: function (data) {//data：返回数据（json对象）

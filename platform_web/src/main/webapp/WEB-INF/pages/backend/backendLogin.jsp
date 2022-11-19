@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-         pageEncoding="utf-8" isErrorPage="true"%>
+         pageEncoding="utf-8" isErrorPage="true" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,6 +65,6 @@
     </div>
 </div>
 </body>
-<script src="/js/backend/login.js" charset="utf-8"></script>
+<script src="js/backend/login.js" charset="utf-8"></script>
 
 </html>

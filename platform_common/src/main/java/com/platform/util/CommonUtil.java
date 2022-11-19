@@ -25,7 +25,7 @@ public class CommonUtil {
     }
 
     public static String strReplace(String str) {
-        return str.replace( "/", "\\");
+        return str.replace("/", "\\");
     }
 
 

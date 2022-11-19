@@ -1,5 +1,6 @@
 package com.platform.developer.controller;
 
+import cn.hutool.core.lang.UUID;
 import com.platform.Vo.Result;
 import com.platform.backend.entity.AppInfo;
 import com.platform.backend.entity.AppVersion;
@@ -9,6 +10,7 @@ import com.platform.constant.CommonsEnum;
 import com.platform.developer.entity.DevUser;
 import com.platform.util.CommonUtil;
 import com.platform.util.FileUtils;
+import com.platform.util.UUIDUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -72,13 +74,16 @@ public class AppVersionAddController {
             String upload = FileUtils.upload(request, file);
             System.out.println("upload = " + upload);
             //封装数据
-            appVersion.setCreatedBy(devUser.getId());
+            appVersion.setId(UUIDUtils.getUUID());
+            appVersion.setCreatedBy(String.valueOf(devUser.getId()));
             appVersion.setCreationDate(new Date());
+            System.out.println(CommonUtil.setFileAbsPath(request));
+            System.out.println("CommonUtil.strReplace(upload) = " + CommonUtil.strReplace(upload));
             appVersion.setApkLocPath(CommonUtil.setFileAbsPath(request) + CommonUtil.strReplace(upload));
             appVersion.setApkFileName(file.getOriginalFilename());
             appVersion.setDownloadLink(upload);
             int i = appVersionService.createAppVersion(appVersion);
-            List<AppVersion> appVersions = appVersionService.getAppVersionListByAppId(appVersion.getAppId());
+            List<AppVersion> appVersions = appVersionService.getAppVersionListByAppId(Long.valueOf(appVersion.getAppId()));
             appVersion = appVersions.get(appVersions.size() - 1);
             System.out.println("appVersions = " + appVersions);
             //更新手游基础信息表的version_id

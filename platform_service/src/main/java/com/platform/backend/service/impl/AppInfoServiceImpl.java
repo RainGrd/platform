@@ -7,6 +7,7 @@ import com.platform.backend.entity.AppVersion;
 import com.platform.backend.mapper.AppInfoMapper;
 import com.platform.backend.mapper.AppVersionMapper;
 import com.platform.backend.service.AppInfoService;
+import com.platform.util.UUIDUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -86,9 +87,10 @@ public class AppInfoServiceImpl implements AppInfoService {
 
     @Override
     public int addAppInfo(AppInfo appInfo) {
-
+        System.out.println("appInfo = " + appInfo);
         //封装数据
         AppVersion appVersion = new AppVersion();
+        appVersion.setId(UUIDUtils.getUUID());
         appVersion.setAppId(appInfo.getId());
         appVersion.setVersionNo("V1.1.1");
         appVersion.setVersionInfo("V1.1.1版本简介");
@@ -100,6 +102,7 @@ public class AppInfoServiceImpl implements AppInfoService {
         System.out.println(appInfo.getLogoLocPath().substring(0, appInfo.getLogoLocPath().lastIndexOf("webapp") + "webapp".length() + 1));
         appVersion.setApkLocPath(appInfo.getLogoLocPath().substring(0, appInfo.getLogoLocPath().lastIndexOf("webapp") + "webapp".length() + 1) + appVersion.getDownloadLink());
         appVersion.setApkFileName(appInfo.getApkName() + appVersion.getVersionNo() + ".apk");
+        appInfo.setVersionId(appVersion.getId());
         //新增版本
         appVersionMapper.insertAppVersion(appVersion);
         return appInfoMapper.insertAppInfo(appInfo);

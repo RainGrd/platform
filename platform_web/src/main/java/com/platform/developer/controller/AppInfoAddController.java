@@ -7,6 +7,7 @@ import com.platform.constant.CommonsEnum;
 import com.platform.developer.entity.DevUser;
 import com.platform.util.CommonUtil;
 import com.platform.util.FileUtils;
+import com.platform.util.UUIDUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,7 +37,7 @@ public class AppInfoAddController {
      * @param apkName
      * @return
      */
-    @GetMapping("/developer/apkexist.do")
+    @RequestMapping("/developer/apkexist.do")
     @ResponseBody
     public Object apkexist(@RequestParam String apkName) {
         boolean flag = appInfoService.apkNameExist(apkName);
@@ -77,11 +78,12 @@ public class AppInfoAddController {
         System.out.println("upload = " + upload);
         // 封装数据
         DevUser devUser = (DevUser) session.getAttribute(CommonsEnum.SESSION_DEVELOPER_USER.getValue());
+        System.out.println("(UUIDUtils.getUUID() = " + (UUIDUtils.getUUID()));
+        appInfo.setId(UUIDUtils.getUUID());
         appInfo.setDevId(devUser.getId());
         appInfo.setCreatedBy(devUser.getId());
         appInfo.setCreationDate(new Date());
         appInfo.setLogoPicPath(upload);
-        appInfo.setVersionId(33L);
         //获取项目绝对路径
         String absPath = CommonUtil.setFileAbsPath(request);
         appInfo.setLogoLocPath(absPath + upload);

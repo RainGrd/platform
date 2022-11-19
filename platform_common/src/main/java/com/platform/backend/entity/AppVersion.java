@@ -22,12 +22,12 @@ public class AppVersion implements Serializable {
     /**
      * 主键id
      */
-    private Long id;
+    private String id;
 
     /**
      * appId（来源于：app_info表的主键id）
      */
-    private Long appId;
+    private String appId;
 
     private String appName;
 
@@ -61,7 +61,7 @@ public class AppVersion implements Serializable {
     /**
      * 创建者（来源于dev_user开发者信息表的用户id）
      */
-    private Long createdBy;
+    private String createdBy;
 
     /**
      * 创建时间
